@@ -1,0 +1,8 @@
+name "wasmer"
+description "A standalone WebAssembly runtime for running WebAssembly outside of the browser"
+authors "Chance Snow" "ZyeByteVT"
+copyright "Copyright © 2020-2024, Chance Snow & ZyeByteVT"
+license "MIT"
+targetType "sourceLibrary"
+libs "wasmer"
+preGenerateCommands "./gen-binding.sh"

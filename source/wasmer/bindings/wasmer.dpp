@@ -1,1 +1,1 @@
-#include "wasmer_wasm.h"
+#include "wasmer.h"
