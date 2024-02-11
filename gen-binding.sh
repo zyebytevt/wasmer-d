@@ -9,4 +9,9 @@ fi
 
 [ -z "$WASMER_INCLUDE" ] && WASMER_INCLUDE=$(dirname $(find /usr -name wasmer.h 2>/dev/null | tail -1))
 
+if [ ! -d "$WASMER_INCLUDE" ]; then
+    >&2 echo "WASMER_INCLUDE is not a directory: $WASMER_INCLUDE"
+    exit 1
+fi
+
 dub run dpp -- --preprocess-only --no-sys-headers --ignore-macros --include-path "$GCC_INCLUDE" --include-path "$WASMER_INCLUDE" source/wasmer/bindings/wasmer.dpp
