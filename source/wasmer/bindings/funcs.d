@@ -60,130 +60,13 @@ static wasm_valtype_t* wasm_valtype_new_funcref() {
 
 // Function Types construction short-hands
 
-static wasm_functype_t* wasm_functype_new_0_0() {
-  wasm_valtype_vec_t params, results;
-  wasm_valtype_vec_new_empty(&params);
-  wasm_valtype_vec_new_empty(&results);
-  return wasm_functype_new(&params, &results);
-}
-
-static wasm_functype_t* wasm_functype_new_1_0(
-    wasm_valtype_t* p
+static wasm_functype_t* wasm_functype_new_p_r(
+  wasm_valtype_t[] params, wasm_valtype_t[] results
 ) {
-  wasm_valtype_t*[1] ps = [p];
-  wasm_valtype_vec_t params, results;
-  wasm_valtype_vec_new(&params, 1.to!ulong, ps.ptr);
-  wasm_valtype_vec_new_empty(&results);
-  return wasm_functype_new(&params, &results);
-}
-
-static wasm_functype_t* wasm_functype_new_2_0(
-    wasm_valtype_t* p1, wasm_valtype_t* p2
-) {
-  wasm_valtype_t*[2] ps = [p1, p2];
-  wasm_valtype_vec_t params, results;
-  wasm_valtype_vec_new(&params, 2.to!ulong, ps.ptr);
-  wasm_valtype_vec_new_empty(&results);
-  return wasm_functype_new(&params, &results);
-}
-
-static wasm_functype_t* wasm_functype_new_3_0(
-    wasm_valtype_t* p1, wasm_valtype_t* p2, wasm_valtype_t* p3
-) {
-  wasm_valtype_t*[3] ps = [p1, p2, p3];
-  wasm_valtype_vec_t params, results;
-  wasm_valtype_vec_new(&params, 3.to!ulong, ps.ptr);
-  wasm_valtype_vec_new_empty(&results);
-  return wasm_functype_new(&params, &results);
-}
-
-static wasm_functype_t* wasm_functype_new_0_1(
-    wasm_valtype_t* r
-) {
-  wasm_valtype_t*[1] rs = [r];
-  wasm_valtype_vec_t params, results;
-  wasm_valtype_vec_new_empty(&params);
-  wasm_valtype_vec_new(&results, 1.to!ulong, rs.ptr);
-  return wasm_functype_new(&params, &results);
-}
-
-static wasm_functype_t* wasm_functype_new_1_1(
-    wasm_valtype_t* p, wasm_valtype_t* r
-) {
-  wasm_valtype_t*[1] ps = [p];
-  wasm_valtype_t*[1] rs = [r];
-  wasm_valtype_vec_t params, results;
-  wasm_valtype_vec_new(&params, 1.to!ulong, ps.ptr);
-  wasm_valtype_vec_new(&results, 1.to!ulong, rs.ptr);
-  return wasm_functype_new(&params, &results);
-}
-
-static wasm_functype_t* wasm_functype_new_2_1(
-    wasm_valtype_t* p1, wasm_valtype_t* p2, wasm_valtype_t* r
-) {
-  wasm_valtype_t*[2] ps = [p1, p2];
-  wasm_valtype_t*[1] rs = [r];
-  wasm_valtype_vec_t params, results;
-  wasm_valtype_vec_new(&params, 2.to!ulong, ps.ptr);
-  wasm_valtype_vec_new(&results, 1.to!ulong, rs.ptr);
-  return wasm_functype_new(&params, &results);
-}
-
-static wasm_functype_t* wasm_functype_new_3_1(
-    wasm_valtype_t* p1, wasm_valtype_t* p2, wasm_valtype_t* p3,
-    wasm_valtype_t* r
-) {
-  wasm_valtype_t*[3] ps = [p1, p2, p3];
-  wasm_valtype_t*[1] rs = [r];
-  wasm_valtype_vec_t params, results;
-  wasm_valtype_vec_new(&params, 3.to!ulong, ps.ptr);
-  wasm_valtype_vec_new(&results, 1.to!ulong, rs.ptr);
-  return wasm_functype_new(&params, &results);
-}
-
-static wasm_functype_t* wasm_functype_new_0_2(
-    wasm_valtype_t* r1, wasm_valtype_t* r2
-) {
-  wasm_valtype_t*[2] rs = [r1, r2];
-  wasm_valtype_vec_t params, results;
-  wasm_valtype_vec_new_empty(&params);
-  wasm_valtype_vec_new(&results, 2.to!ulong, rs.ptr);
-  return wasm_functype_new(&params, &results);
-}
-
-static wasm_functype_t* wasm_functype_new_1_2(
-    wasm_valtype_t* p, wasm_valtype_t* r1, wasm_valtype_t* r2
-) {
-  wasm_valtype_t*[1] ps = [p];
-  wasm_valtype_t*[2] rs = [r1, r2];
-  wasm_valtype_vec_t params, results;
-  wasm_valtype_vec_new(&params, 1.to!ulong, ps.ptr);
-  wasm_valtype_vec_new(&results, 2.to!ulong, rs.ptr);
-  return wasm_functype_new(&params, &results);
-}
-
-static wasm_functype_t* wasm_functype_new_2_2(
-    wasm_valtype_t* p1, wasm_valtype_t* p2,
-    wasm_valtype_t* r1, wasm_valtype_t* r2
-) {
-  wasm_valtype_t*[2] ps = [p1, p2];
-  wasm_valtype_t*[2] rs = [r1, r2];
-  wasm_valtype_vec_t params, results;
-  wasm_valtype_vec_new(&params, 2.to!ulong, ps.ptr);
-  wasm_valtype_vec_new(&results, 2.to!ulong, rs.ptr);
-  return wasm_functype_new(&params, &results);
-}
-
-static wasm_functype_t* wasm_functype_new_3_2(
-    wasm_valtype_t* p1, wasm_valtype_t* p2, wasm_valtype_t* p3,
-    wasm_valtype_t* r1, wasm_valtype_t* r2
-) {
-  wasm_valtype_t*[3] ps = [p1, p2, p3];
-  wasm_valtype_t*[2] rs = [r1, r2];
-  wasm_valtype_vec_t params, results;
-  wasm_valtype_vec_new(&params, 3.to!ulong, ps.ptr);
-  wasm_valtype_vec_new(&results, 2.to!ulong, rs.ptr);
-  return wasm_functype_new(&params, &results);
+  wasm_valtype_vec_t paramsVec, resultsVec;
+  wasm_valtype_vec_new(&paramsVec, params.length, params.ptr);
+  wasm_valtype_vec_new(&resultsVec, results.length, results.ptr);
+  return wasm_functype_new(&paramsVec, &resultsVec);
 }
 
 // Value construction short-hands
