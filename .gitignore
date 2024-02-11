@@ -28,5 +28,4 @@ docs/
 # Code coverage
 *.lst
 
-source/wasmer/bindings/wasmer.d
 .vscode

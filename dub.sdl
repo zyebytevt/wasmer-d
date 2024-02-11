@@ -3,6 +3,5 @@ description "A standalone WebAssembly runtime for running WebAssembly outside of
 authors "Chance Snow" "ZyeByteVT"
 copyright "Copyright © 2020-2024, Chance Snow & ZyeByteVT"
 license "MIT"
-targetType "sourceLibrary"
+targetType "library"
 libs "wasmer"
-preGenerateCommands "./gen-binding.sh"

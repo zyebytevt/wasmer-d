@@ -14,7 +14,7 @@ module wasmer.bindings.funcs;
 import core.stdc.string : strlen;
 import std.conv : to;
 
-import wasmer.bindings;
+import wasmer.bindings.cwasmer;
 
 pragma(inline, true):
 
@@ -26,58 +26,71 @@ alias wasm_name_new_new_uninitialized = wasm_byte_vec_new_uninitialized;
 alias wasm_name_copy = wasm_byte_vec_copy;
 alias wasm_name_delete = wasm_byte_vec_delete;
 
-static void wasm_name_new_from_string(wasm_name_t* name, const char* s) {
-  wasm_name_new(name, strlen(s), s);
+static void wasm_name_new_from_string(wasm_name_t* name, const char* s)
+{
+    wasm_name_new(name, strlen(s), s);
 }
 
-static void wasm_name_new_from_string_nt(wasm_name_t* name, const char* s) {
-  wasm_name_new(name, strlen(s) + 1, s);
+static void wasm_name_new_from_string_nt(wasm_name_t* name, const char* s)
+{
+    wasm_name_new(name, strlen(s) + 1, s);
 }
 
 alias wasm_name_delete = wasm_byte_vec_delete;
 
 // Value Type construction short-hands
 
-static wasm_valtype_t* wasm_valtype_new_i32() {
-  return wasm_valtype_new(WASM_I32);
-}
-static wasm_valtype_t* wasm_valtype_new_i64() {
-  return wasm_valtype_new(WASM_I64);
-}
-static wasm_valtype_t* wasm_valtype_new_f32() {
-  return wasm_valtype_new(WASM_F32);
-}
-static wasm_valtype_t* wasm_valtype_new_f64() {
-  return wasm_valtype_new(WASM_F64);
+static wasm_valtype_t* wasm_valtype_new_i32()
+{
+    return wasm_valtype_new(wasm_valkind_enum.WASM_I32);
 }
 
-static wasm_valtype_t* wasm_valtype_new_anyref() {
-  return wasm_valtype_new(WASM_ANYREF);
+static wasm_valtype_t* wasm_valtype_new_i64()
+{
+    return wasm_valtype_new(wasm_valkind_enum.WASM_I64);
 }
-static wasm_valtype_t* wasm_valtype_new_funcref() {
-  return wasm_valtype_new(WASM_FUNCREF);
+
+static wasm_valtype_t* wasm_valtype_new_f32()
+{
+    return wasm_valtype_new(wasm_valkind_enum.WASM_F32);
+}
+
+static wasm_valtype_t* wasm_valtype_new_f64()
+{
+    return wasm_valtype_new(wasm_valkind_enum.WASM_F64);
+}
+
+static wasm_valtype_t* wasm_valtype_new_anyref()
+{
+    return wasm_valtype_new(wasm_valkind_enum.WASM_ANYREF);
+}
+
+static wasm_valtype_t* wasm_valtype_new_funcref()
+{
+    return wasm_valtype_new(wasm_valkind_enum.WASM_FUNCREF);
 }
 
 // Function Types construction short-hands
 
-static wasm_functype_t* wasm_functype_new_p_r(
-  wasm_valtype_t[] params, wasm_valtype_t[] results
-) {
-  wasm_valtype_vec_t paramsVec, resultsVec;
-  wasm_valtype_vec_new(&paramsVec, params.length, params.ptr);
-  wasm_valtype_vec_new(&resultsVec, results.length, results.ptr);
-  return wasm_functype_new(&paramsVec, &resultsVec);
+static wasm_functype_t* wasm_functype_new_p_r(wasm_valtype_t*[] params, wasm_valtype_t*[] results)
+{
+    wasm_valtype_vec_t paramsVec, resultsVec;
+    wasm_valtype_vec_new(&paramsVec, params.length, params.ptr);
+    wasm_valtype_vec_new(&resultsVec, results.length, results.ptr);
+    return wasm_functype_new(&paramsVec, &resultsVec);
 }
 
 // Value construction short-hands
 
-static void wasm_val_init_ptr(wasm_val_t* out_, void* p) {
-  import core.stdc.config : c_long;
+static void wasm_val_init_ptr(wasm_val_t* out_, void* p)
+{
+    import core.stdc.config : c_long;
 
-  out_.kind = WASM_I64;
-  out_.of.i64 = cast(c_long) p;
+    out_.kind = wasm_valkind_enum.WASM_I64;
+    out_.of.i64 = cast(c_long) p;
 }
 
-static void* wasm_val_ptr(const wasm_val_t* val) {
-  return cast(void*) &val.of.i64;
+static void* wasm_val_ptr(const wasm_val_t* val)
+{
+    return cast(void*)&val.of.i64;
 }

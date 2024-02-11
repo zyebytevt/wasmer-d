@@ -14,4 +14,5 @@ if [ ! -d "$WASMER_INCLUDE" ]; then
     exit 1
 fi
 
-dub run dpp -- --preprocess-only --no-sys-headers --ignore-macros --include-path "$GCC_INCLUDE" --include-path "$WASMER_INCLUDE" source/wasmer/bindings/wasmer.dpp
+dub run dpp -- --preprocess-only --no-sys-headers --ignore-macros --scoped-enums --include-path "$GCC_INCLUDE" --include-path "$WASMER_INCLUDE" source/wasmer/bindings/cwasmer.dpp
+sed -i '/^[[:space:]]*$/d' source/wasmer/bindings/cwasmer.d
